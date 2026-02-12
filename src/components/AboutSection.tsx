@@ -11,18 +11,26 @@ const AboutSection = () => {
   const ref = useScrollFadeIn();
 
   return (
-    <section id="about" className="py-24 md:py-32 bg-cream">
+    <section id="about" className="py-24 md:py-32 bg-cream dark:bg-background">
       <div ref={ref} className="section-fade-in max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
           {/* Image side */}
           <div className="order-2 md:order-1">
             <div className="relative">
-              <div className="aspect-[4/5] bg-gradient-to-br from-gold-light/20 to-gold/10 rounded-sm gold-border flex items-center justify-center">
-                <span className="font-serif-display text-6xl text-gold/30">Photo</span>
+              <div className="aspect-[4/5] rounded-sm premium-frame p-3 md:p-4">
+                <div className="h-full w-full rounded-sm overflow-hidden bg-foreground/5">
+                  <img
+                    src="/profile%20img.png"
+                    alt="Raj Karnawat"
+                    className="h-full w-full object-contain object-top scale-[0.95]"
+                    loading="lazy"
+                  />
+                </div>
               </div>
               {/* Decorative corner */}
               <div className="absolute -top-3 -left-3 w-16 h-16 border-t-2 border-l-2 border-gold" />
               <div className="absolute -bottom-3 -right-3 w-16 h-16 border-b-2 border-r-2 border-gold" />
+              <div className="pointer-events-none absolute inset-0 rounded-sm ring-1 ring-gold/20" />
             </div>
           </div>
 
@@ -30,21 +38,26 @@ const AboutSection = () => {
           <div className="order-1 md:order-2">
             <span className="font-body text-xs tracking-[0.3em] uppercase text-gold mb-4 block">The Story</span>
             <h2 className="font-serif-display text-3xl md:text-5xl font-bold text-foreground mb-6">
-              A Legacy Built on{" "}
-              <span className="gold-text-gradient">Expertise</span>
+              A Legacy Built on Knowledge,{" "}
+              <span className="gold-text-gradient">Precision & Integrity</span>
             </h2>
             <div className="space-y-4 font-body text-charcoal-light leading-relaxed">
               <p>
-                With over 12 years immersed in the world of numismatics, Raj Pradeep Karnawat has
-                established himself as one of the most trusted authorities in Indian coin trading.
-                Specializing in coins from 100 BC to 1947, his expertise spans the full spectrum
-                of India's rich monetary history.
+                For over 12 years, Raj Karnawat has been deeply immersed in the numismatics market, 
+                building a reputation rooted in authenticity, scholarship, and transparency.
               </p>
               <p>
-                His rare ability to read Brahmi and Persian scripts on ancient coins sets him apart,
-                enabling precise authentication and historical attribution that few in the industry
-                can match. Over 50,000 successful deals and 10,000+ satisfied clients stand as
-                testament to his credibility and market command.
+                As Co-Founder of <span className="font-semibold text-foreground">Numismatics Scholar Hub</span>, an integrated marketplace
+                and knowledge platform for ancient and colonial Indian coins, he helps build systems that combine authentication,
+                evaluation, guidance, and community engagement into a single ecosystem.
+              </p>
+              <p>
+                Specializing in coins from 100 BC to 1947, his work spans Mauryan punch-marked coins to 
+                British India silver rupees — covering nearly two millennia of monetary history.
+              </p>
+              <p className="font-semibold text-foreground">
+                With over 50,000+ successful deals, 10,000+ satisfied clients, and 12+ years of uninterrupted 
+                market presence, he stands today as a respected authority in Indian numismatics.
               </p>
             </div>
 

@@ -2,40 +2,68 @@ import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const coins = [
   {
-    era: "Maurya Empire",
-    date: "~300 BC",
-    front: "Punch-marked Silver",
-    back: "One of India's earliest silver coins featuring symbolic punches from the Mauryan dynasty.",
-  },
-  {
-    era: "Kushan Dynasty",
-    date: "~150 AD",
-    front: "Gold Dinar",
-    back: "Kanishka-era gold dinar showing Hellenistic and Indian cultural fusion in coinage.",
-  },
-  {
-    era: "Gupta Empire",
+    era: "Gupta",
     date: "~400 AD",
-    front: "Archer Type Gold",
-    back: "Classic Gupta gold coin depicting the king as an archer — peak of Indian numismatic art.",
+    frontImg: "/coins/1.png",
+    backImg: "/coins/1.1.png",
+    back:
+      "Classic Gupta gold coinage known for artistic excellence and refined iconography.",
   },
   {
-    era: "Delhi Sultanate",
-    date: "~1300 AD",
-    front: "Tanka Silver",
-    back: "Arabic inscriptions with Islamic calligraphy, marking the Sultanate's monetary reforms.",
+    era: "Chandragupta",
+    date: "~400 AD",
+    frontImg: "/coins/2.png",
+    backImg: "/coins/2.2.png",
+    back:
+      "A celebrated Gupta-era issue reflecting royal authority and the era’s high standards of minting.",
   },
   {
-    era: "Mughal Empire",
+    era: "Vasudeva II Kushan",
+    date: "~200 AD",
+    frontImg: "/coins/3.png",
+    backImg: "/coins/3.3.png",
+    back:
+      "Kushan coinage blending imperial symbolism with distinct religious and cultural motifs.",
+  },
+  {
+    era: "Shahjahan Ahmedabad Mughal",
     date: "~1600 AD",
-    front: "Rupee Silver",
-    back: "Akbar-era silver rupee with Persian inscriptions — the coin that shaped modern Indian currency.",
+    frontImg: "/coins/4.png",
+    backImg: "/coins/4.4.png",
+    back:
+      "Mughal coinage noted for elegant Persian inscriptions and refined calligraphic design.",
   },
   {
-    era: "British India",
-    date: "~1900 AD",
-    front: "One Rupee Silver",
-    back: "King Edward VII silver rupee — a bridge between colonial rule and Indian independence.",
+    era: "Mauryan Empire",
+    date: "~300 BC",
+    frontImg: "/coins/5.png",
+    backImg: "/coins/5.5.png",
+    back:
+      "Among India’s earliest coinage traditions, featuring symbolic punch marks and early monetary standardization.",
+  },
+  {
+    era: "Ala ud din Khilji Delhi Sultan",
+    date: "~1300 AD",
+    frontImg: "/coins/6.png",
+    backImg: "/coins/6.6.png",
+    back:
+      "Delhi Sultanate issues renowned for Islamic calligraphy and historically significant monetary reforms.",
+  },
+  {
+    era: "One Rupee British Victoria Queen",
+    date: "1862 · British India",
+    frontImg: "/coins/8.png",
+    backImg: "/coins/8.8.png",
+    back:
+      "Iconic British India silver rupee of Queen Victoria, 1862 — a cornerstone type in colonial numismatics and a key reference for serious collectors.",
+  },
+  {
+    era: "Shahjahan Shahjahanabad Gold Mohar",
+    date: "~1600s · Mughal Empire",
+    frontImg: "/coins/9.png",
+    backImg: "/coins/9.9.png",
+    back:
+      "A rare Mughal gold mohar from the reign of Shahjahan, struck at Shahjahanabad, showcasing regal calligraphy and imperial refinement.",
   },
 ];
 
@@ -57,29 +85,35 @@ const CoinGallery = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {coins.map((coin) => (
             <div key={coin.era} className="coin-card-perspective cursor-pointer group">
               <div className="coin-card-inner relative w-full aspect-square">
                 {/* Front */}
-                <div className="coin-card-front absolute inset-0 rounded-sm gold-border bg-cream flex flex-col items-center justify-center p-6">
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-gold/20 to-gold-light/30 flex items-center justify-center mb-4 shadow-inner">
-                    <span className="font-serif-display text-lg text-gold-dark text-center leading-tight px-2">
-                      {coin.front}
-                    </span>
+                <div className="coin-card-front absolute inset-0 rounded-sm gold-border bg-cream dark:bg-card flex flex-col items-center justify-center p-6">
+                  <div className="w-40 h-40 rounded-sm bg-gradient-to-br from-gold/10 to-gold-light/20 flex items-center justify-center mb-4 shadow-inner overflow-hidden">
+                    <img
+                      src={coin.frontImg}
+                      alt={`${coin.era} (front)`}
+                      className="w-full h-full object-contain"
+                      loading="lazy"
+                    />
                   </div>
                   <h3 className="font-serif-display text-lg font-semibold text-foreground">{coin.era}</h3>
                   <span className="font-body text-sm text-gold">{coin.date}</span>
                 </div>
 
                 {/* Back */}
-                <div className="coin-card-back absolute inset-0 rounded-sm bg-foreground flex flex-col items-center justify-center p-8 text-center">
-                  <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center mb-4">
-                    <span className="font-serif-display text-xl text-gold">↻</span>
-                  </div>
-                  <h3 className="font-serif-display text-lg font-semibold text-cream mb-3">{coin.era}</h3>
-                  <p className="font-body text-sm text-cream/70 leading-relaxed">{coin.back}</p>
-                  <span className="mt-4 font-body text-xs tracking-widest uppercase text-gold/70">{coin.date}</span>
+                <div className="coin-card-back absolute inset-0 rounded-sm bg-foreground dark:bg-[#111C35] flex flex-col items-center justify-center p-8 text-center">
+                  <h3 className="font-serif-display text-lg font-semibold text-cream mb-3">
+                    {coin.era}
+                  </h3>
+                  <p className="font-body text-sm text-cream/80 leading-relaxed">
+                    {coin.back}
+                  </p>
+                  <span className="mt-4 font-body text-xs tracking-widest uppercase text-gold/70">
+                    {coin.date}
+                  </span>
                 </div>
               </div>
             </div>

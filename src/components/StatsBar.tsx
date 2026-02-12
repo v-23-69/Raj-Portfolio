@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 
 const stats = [
-  { value: 12, suffix: "+", label: "Years Experience" },
+  { value: 12, suffix: "+", label: "Years in Numismatics" },
   { value: 50000, suffix: "+", label: "Successful Deals" },
-  { value: 10000, suffix: "+", label: "Trusted Clients" },
-  { value: null, suffix: "", label: "Specialization Range", display: "100 BC – 1947" },
+  { value: 10000, suffix: "+", label: "Satisfied Clients" },
+  { value: 4.5, suffix: "", label: "Years in Software Development", display: "4.5" },
 ];
 
 function AnimatedCounter({ target, suffix }: { target: number; suffix: string }) {
@@ -50,7 +50,7 @@ function AnimatedCounter({ target, suffix }: { target: number; suffix: string })
 const StatsBar = () => (
   <section className="relative z-10 -mt-1">
     <div className="max-w-6xl mx-auto px-6">
-      <div className="bg-foreground/95 backdrop-blur-md rounded-sm py-8 md:py-10 px-6 shadow-2xl">
+      <div className="bg-foreground/95 dark:bg-[#111C35]/95 backdrop-blur-md rounded-sm py-8 md:py-10 px-6 shadow-2xl border border-gold/20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0">
           {stats.map((stat, i) => (
             <div

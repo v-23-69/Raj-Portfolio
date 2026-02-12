@@ -56,12 +56,65 @@
 }
 
 @layer base {
+  .dark {
+    /* Dark theme tokens - navy & gold */
+    --background: 222 60% 9%; /* #0B1426 */
+    --foreground: 0 0% 96%; /* #F5F5F5 */
+
+    --card: 225 52% 13%; /* #111C35 */
+    --card-foreground: 0 0% 96%;
+
+    --popover: 225 52% 13%;
+    --popover-foreground: 0 0% 96%;
+
+    --primary: 43 38% 57%; /* #C6A75E */
+    --primary-foreground: 222 60% 9%; /* navy */
+
+    --secondary: 225 40% 18%; /* slightly lighter navy */
+    --secondary-foreground: 0 0% 96%;
+
+    --muted: 225 35% 20%;
+    --muted-foreground: 225 30% 75%; /* #B8C0D9-ish */
+
+    --accent: 43 45% 65%; /* soft gold highlight */
+    --accent-foreground: 222 60% 9%;
+
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 43 38% 57% / 0.25; /* rgba(198,167,94,0.25) */
+    --input: 225 35% 22%;
+    --ring: 43 38% 57%;
+
+    --gold: 43 38% 57%; /* primary gold */
+    --gold-light: 43 55% 75%; /* highlight gold */
+    --gold-dark: 43 35% 40%;
+
+    /* Keep cream as light text utility even in dark mode */
+    --cream: 40 33% 96%; /* soft ivory */
+    --cream-dark: 225 40% 11%; /* deep navy surface variant */
+
+    --charcoal: 222 50% 12%;
+    --charcoal-light: 225 30% 75%; /* muted text */
+
+    --sidebar-background: 222 60% 9%;
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-primary: 225 52% 13%;
+    --sidebar-primary-foreground: 0 0% 96%;
+    --sidebar-accent: 225 40% 18%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 43 38% 57% / 0.25;
+    --sidebar-ring: 43 38% 57%;
+  }
+}
+
+@layer base {
   * {
-    @apply border-border;
+    @apply border-border transition-colors duration-300 ease-in-out;
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans transition-colors duration-300 ease-in-out;
     font-family: 'Lato', sans-serif;
   }
 
@@ -93,6 +146,51 @@
   .gold-border {
     border: 2px solid hsl(43 45% 56%);
     box-shadow: 0 0 15px hsl(43 45% 56% / 0.2), inset 0 0 15px hsl(43 45% 56% / 0.05);
+  }
+
+  .premium-frame {
+    border: 2px solid hsl(43 45% 56% / 0.9);
+    background: radial-gradient(120% 120% at 20% 10%, hsl(43 50% 75% / 0.22), transparent 60%),
+      radial-gradient(120% 120% at 80% 90%, hsl(43 45% 56% / 0.18), transparent 65%),
+      linear-gradient(135deg, hsl(40 33% 96%), hsl(40 25% 92%));
+    box-shadow:
+      0 18px 45px rgba(0, 0, 0, 0.12),
+      0 0 0 1px hsl(43 45% 56% / 0.25),
+      inset 0 0 0 1px hsl(43 50% 75% / 0.35),
+      inset 0 0 22px hsl(43 45% 56% / 0.08);
+  }
+
+  @keyframes rkGlowBlink {
+    0%, 100% {
+      transform: translateZ(0) scale(1);
+      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.18));
+      box-shadow: 0 0 0 6px var(--rk-glow-ring), 0 0 26px 2px var(--rk-glow);
+    }
+    50% {
+      transform: translateZ(0) scale(1.04);
+      filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.22));
+      box-shadow: 0 0 0 8px var(--rk-glow-ring), 0 0 40px 6px var(--rk-glow);
+    }
+  }
+
+  .rk-glow-blink {
+    animation: rkGlowBlink 0.9s ease-in-out infinite;
+    will-change: transform, filter, box-shadow;
+  }
+
+  .rk-glow-whatsapp {
+    --rk-glow: rgba(34, 197, 94, 0.55);
+    --rk-glow-ring: rgba(34, 197, 94, 0.28);
+  }
+
+  .rk-glow-facebook {
+    --rk-glow: rgba(37, 99, 235, 0.55);
+    --rk-glow-ring: rgba(37, 99, 235, 0.28);
+  }
+
+  .rk-glow-instagram {
+    --rk-glow: rgba(217, 70, 239, 0.55);
+    --rk-glow-ring: rgba(217, 70, 239, 0.28);
   }
 
   .coin-card-perspective {
@@ -127,5 +225,42 @@
   .section-fade-in.visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* Smooth marquee animation for testimonials */
+  @keyframes rkMarquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-50% - var(--gap)));
+    }
+  }
+
+  .animate-marquee {
+    animation: rkMarquee var(--duration, 40s) linear infinite;
+  }
+
+  /* Hero coin grid 3D flip */
+  .hero-coin-perspective {
+    perspective: 1000px;
+  }
+
+  .hero-coin-inner {
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hero-coin-face {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .hero-coin-back {
+    transform: rotateY(180deg);
+  }
+
+  .hero-coin-perspective:hover .hero-coin-inner {
+    transform: rotateY(180deg);
   }
 }
