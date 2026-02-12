@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Phone } from "lucide-react";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -55,33 +54,29 @@ const Navbar = () => {
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-6">
           <ul className="flex items-center gap-8">
-          {navLinks.map((l) => (
-            <li key={l.href}>
-              <button
-                onClick={() => handleClick(l.href)}
-                className="font-body text-sm tracking-widest uppercase text-foreground/70 hover:text-gold transition-colors duration-200"
-              >
-                {l.label}
-              </button>
-            </li>
-          ))}
+            {navLinks.map((l) => (
+              <li key={l.href}>
+                <button
+                  onClick={() => handleClick(l.href)}
+                  className="font-body text-sm tracking-widest uppercase text-foreground/70 hover:text-gold transition-colors duration-200"
+                >
+                  {l.label}
+                </button>
+              </li>
+            ))}
           </ul>
 
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-            <a
-              href="tel:+919922331612"
-              aria-label="Call 9922331612"
-              className="inline-flex items-center justify-center h-10 w-10 rounded-full border border-gold/40 text-foreground hover:bg-gold/10 transition-colors"
-            >
-              <Phone className="h-4 w-4" />
-            </a>
-          </div>
+          <a
+            href="tel:+919922331612"
+            aria-label="Call 9922331612"
+            className="inline-flex items-center justify-center h-10 w-10 rounded-full border border-gold/40 text-foreground hover:bg-gold/10 transition-colors"
+          >
+            <Phone className="h-4 w-4" />
+          </a>
         </div>
 
         {/* Mobile toggle */}
         <div className="md:hidden flex items-center gap-3">
-          <ThemeToggle />
           <button
             className="flex flex-col gap-1.5"
             onClick={() => setMobileOpen(!mobileOpen)}

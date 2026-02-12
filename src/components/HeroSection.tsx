@@ -13,10 +13,18 @@ const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream-dark dark:bg-background"
     >
       {/* Background */}
-      <div className="absolute inset-0 bg-white dark:bg-[#0B1426]" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-cover bg-center opacity-95 dark:opacity-85"
+        style={{ backgroundImage: "url('/bg3.jpg')" }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-b from-white/35 via-white/25 to-white/40 dark:from-[#050913]/75 dark:via-[#050913]/65 dark:to-[#050913]/80"
+      />
 
       <div
         className={`relative z-10 w-full transition-all duration-1000 ${

@@ -6,58 +6,7 @@
 
 @layer base {
   :root {
-    --background: 40 33% 96%;
-    --foreground: 220 20% 15%;
-
-    --card: 40 30% 98%;
-    --card-foreground: 220 20% 15%;
-
-    --popover: 40 30% 98%;
-    --popover-foreground: 220 20% 15%;
-
-    --primary: 43 45% 56%;
-    --primary-foreground: 40 33% 96%;
-
-    --secondary: 40 25% 92%;
-    --secondary-foreground: 220 20% 15%;
-
-    --muted: 40 20% 90%;
-    --muted-foreground: 220 10% 45%;
-
-    --accent: 43 45% 56%;
-    --accent-foreground: 220 20% 15%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 40 25% 85%;
-    --input: 40 25% 85%;
-    --ring: 43 45% 56%;
-
-    --radius: 0.5rem;
-
-    --gold: 43 45% 56%;
-    --gold-light: 43 50% 75%;
-    --gold-dark: 43 40% 40%;
-    --cream: 40 33% 96%;
-    --cream-dark: 40 25% 92%;
-    --charcoal: 220 20% 15%;
-    --charcoal-light: 220 10% 45%;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-}
-
-@layer base {
-  .dark {
-    /* Dark theme tokens - navy & gold */
+    /* Dark theme tokens - navy & gold (used everywhere) */
     --background: 222 60% 9%; /* #0B1426 */
     --foreground: 0 0% 96%; /* #F5F5F5 */
 
@@ -86,11 +35,13 @@
     --input: 225 35% 22%;
     --ring: 43 38% 57%;
 
+    --radius: 0.5rem;
+
     --gold: 43 38% 57%; /* primary gold */
     --gold-light: 43 55% 75%; /* highlight gold */
     --gold-dark: 43 35% 40%;
 
-    /* Keep cream as light text utility even in dark mode */
+    /* Soft ivory and navy surface */
     --cream: 40 33% 96%; /* soft ivory */
     --cream-dark: 225 40% 11%; /* deep navy surface variant */
 
@@ -114,7 +65,7 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans transition-colors duration-300 ease-in-out;
+    @apply bg-background text-foreground font-sans transition-colors duration-300 ease-in-out overflow-x-hidden;
     font-family: 'Lato', sans-serif;
   }
 
@@ -158,6 +109,22 @@
       0 0 0 1px hsl(43 45% 56% / 0.25),
       inset 0 0 0 1px hsl(43 50% 75% / 0.35),
       inset 0 0 22px hsl(43 45% 56% / 0.08);
+  }
+
+  .gold-glow-text {
+    color: hsl(var(--gold));
+    text-shadow:
+      0 0 12px rgba(198, 167, 94, 0.9),
+      0 0 28px rgba(198, 167, 94, 0.6);
+  }
+
+  .stats-glass {
+    background:
+      radial-gradient(circle at 0% 0%, rgba(198, 167, 94, 0.12), transparent 55%),
+      radial-gradient(circle at 100% 100%, rgba(198, 167, 94, 0.1), transparent 55%),
+      rgba(6, 10, 22, 0.96);
+    box-shadow: 0 26px 70px rgba(0, 0, 0, 0.85);
+    border: 1px solid rgba(198, 167, 94, 0.7);
   }
 
   @keyframes rkGlowBlink {
@@ -213,6 +180,29 @@
   }
 
   .coin-card-back {
+    transform: rotateY(180deg);
+  }
+
+  /* Contact visiting card specific 3D flip */
+  .contact-card-perspective {
+    perspective: 1000px;
+  }
+
+  .contact-card-inner {
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+
+  .contact-card-perspective:hover .contact-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .contact-card-face {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .contact-card-back {
     transform: rotateY(180deg);
   }
 

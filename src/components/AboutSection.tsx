@@ -11,8 +11,33 @@ const AboutSection = () => {
   const ref = useScrollFadeIn();
 
   return (
-    <section id="about" className="py-24 md:py-32 bg-cream dark:bg-background">
-      <div ref={ref} className="section-fade-in max-w-6xl mx-auto px-6">
+    <section
+      id="about"
+      className="relative py-24 md:py-32 bg-background overflow-hidden"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-95 contrast-[1.05]"
+        style={{ backgroundImage: "url('/bg12.jpg')" }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(11,20,38,0.82), rgba(11,20,38,0.78) 35%, rgba(11,20,38,0.7) 70%, rgba(11,20,38,0.66))",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(circle at 70% 50%, rgba(198,167,94,0.15), transparent 60%)",
+        }}
+      />
+
+      <div ref={ref} className="relative section-fade-in max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
           {/* Image side */}
           <div className="order-2 md:order-1">

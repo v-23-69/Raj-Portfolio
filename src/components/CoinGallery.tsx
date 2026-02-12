@@ -71,8 +71,18 @@ const CoinGallery = () => {
   const ref = useScrollFadeIn();
 
   return (
-    <section id="gallery" className="py-24 md:py-32 bg-cream-dark">
-      <div ref={ref} className="section-fade-in max-w-6xl mx-auto px-6">
+    <section id="gallery" className="relative py-24 md:py-32 bg-cream-dark dark:bg-background overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-90 dark:opacity-75"
+        style={{ backgroundImage: "url('/bg3.jpg')" }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/20 via-background/15 to-background/35 dark:from-background/65 dark:via-background/55 dark:to-background/75"
+      />
+
+      <div ref={ref} className="relative section-fade-in max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
           <span className="font-body text-xs tracking-[0.3em] uppercase text-gold mb-4 block">
             The Collection

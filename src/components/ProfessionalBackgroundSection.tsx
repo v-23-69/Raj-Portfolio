@@ -5,8 +5,20 @@ const ProfessionalBackgroundSection = () => {
   const ref = useScrollFadeIn();
 
   return (
-    <section id="professional-background" className="py-24 md:py-32 bg-cream-dark">
-      <div ref={ref} className="section-fade-in max-w-6xl mx-auto px-6">
+    <section
+      id="professional-background"
+      className="relative py-24 md:py-32 bg-cream-dark dark:bg-background overflow-hidden"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-90 dark:opacity-80"
+        style={{ backgroundImage: "url('/bg10.jpg')" }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background/92 via-background/86 to-background/92 dark:from-background/96 dark:via-background/88 dark:to-background/96"
+      />
+      <div ref={ref} className="relative section-fade-in max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
           <span className="font-body text-xs tracking-[0.3em] uppercase text-gold mb-4 block">
             Professional Background
