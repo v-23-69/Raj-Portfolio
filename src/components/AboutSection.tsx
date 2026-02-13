@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
-import { BookOpen, Languages, TrendingUp } from "lucide-react";
+import { BookOpen, Languages, TrendingUp, ChevronDown, ChevronUp } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const highlights = [
   { icon: BookOpen, text: "Deep knowledge of Brahmi & Persian scripts on ancient coins" },
@@ -9,6 +11,8 @@ const highlights = [
 
 const AboutSection = () => {
   const ref = useScrollFadeIn();
+  const isMobile = useIsMobile();
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <section
@@ -52,7 +56,6 @@ const AboutSection = () => {
                   />
                 </div>
               </div>
-              {/* Decorative corner */}
               <div className="absolute -top-3 -left-3 w-16 h-16 border-t-2 border-l-2 border-gold" />
               <div className="absolute -bottom-3 -right-3 w-16 h-16 border-b-2 border-r-2 border-gold" />
               <div className="pointer-events-none absolute inset-0 rounded-sm ring-1 ring-gold/20" />
@@ -71,31 +74,46 @@ const AboutSection = () => {
                 For over 12 years, Raj Karnawat has been deeply immersed in the numismatics market, 
                 building a reputation rooted in authenticity, scholarship, and transparency.
               </p>
-              <p>
-                As Co-Founder of <span className="font-semibold text-foreground">Numismatics Scholar Hub</span>, an integrated marketplace
-                and knowledge platform for ancient and colonial Indian coins, he helps build systems that combine authentication,
-                evaluation, guidance, and community engagement into a single ecosystem.
-              </p>
-              <p>
-                Specializing in coins from 100 BC to 1947, his work spans Mauryan punch-marked coins to 
-                British India silver rupees — covering nearly two millennia of monetary history.
-              </p>
-              <p className="font-semibold text-foreground">
-                With over 50,000+ successful deals, 10,000+ satisfied clients, and 12+ years of uninterrupted 
-                market presence, he stands today as a respected authority in Indian numismatics.
-              </p>
+              {(!isMobile || expanded) && (
+                <>
+                  <p>
+                    As Co-Founder of <span className="font-semibold text-foreground">Numismatics Scholar Hub</span>, an integrated marketplace
+                    and knowledge platform for ancient and colonial Indian coins, he helps build systems that combine authentication,
+                    evaluation, guidance, and community engagement into a single ecosystem.
+                  </p>
+                  <p>
+                    Specializing in coins from 100 BC to 1947, his work spans Mauryan punch-marked coins to 
+                    British India silver rupees — covering nearly two millennia of monetary history.
+                  </p>
+                  <p className="font-semibold text-foreground">
+                    With over 50,000+ successful deals, 10,000+ satisfied clients, and 12+ years of uninterrupted 
+                    market presence, he stands today as a respected authority in Indian numismatics.
+                  </p>
+                </>
+              )}
+              {isMobile && (
+                <button
+                  onClick={() => setExpanded(!expanded)}
+                  className="flex items-center gap-1.5 text-gold font-semibold text-sm mt-2 hover:opacity-80 transition-opacity"
+                >
+                  {expanded ? "Read Less" : "Read More"}
+                  {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+              )}
             </div>
 
-            <div className="mt-8 space-y-4">
-              {highlights.map((h) => (
-                <div key={h.text} className="flex items-start gap-3">
-                  <div className="mt-0.5 p-2 rounded-sm bg-gold/10">
-                    <h.icon className="w-4 h-4 text-gold" />
+            {(!isMobile || expanded) && (
+              <div className="mt-8 space-y-4">
+                {highlights.map((h) => (
+                  <div key={h.text} className="flex items-start gap-3">
+                    <div className="mt-0.5 p-2 rounded-sm bg-gold/10">
+                      <h.icon className="w-4 h-4 text-gold" />
+                    </div>
+                    <span className="font-body text-sm text-foreground/80">{h.text}</span>
                   </div>
-                  <span className="font-body text-sm text-foreground/80">{h.text}</span>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

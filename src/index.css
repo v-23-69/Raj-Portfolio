@@ -254,3 +254,10 @@
     transform: rotateY(180deg);
   }
 }
+
+/* Mobile background fix */
+@media (max-width: 767px) {
+  .bg-fixed {
+    background-attachment: scroll !important;
+  }
+}

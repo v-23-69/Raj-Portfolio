@@ -1,27 +1,30 @@
+import { useEffect, useState } from "react";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 import { Target, Eye, Shield, Heart } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const missions = [
-  {
-    icon: Shield,
-    title: "Bring transparency to the coin market",
-  },
-  {
-    icon: Eye,
-    title: "Promote historical awareness",
-  },
-  {
-    icon: Target,
-    title: "Provide accurate and fair valuations",
-  },
-  {
-    icon: Heart,
-    title: "Help collectors build meaningful legacy collections",
-  },
+  { icon: Shield, title: "Bring transparency to the coin market" },
+  { icon: Eye, title: "Promote historical awareness" },
+  { icon: Target, title: "Provide accurate and fair valuations" },
+  { icon: Heart, title: "Help collectors build meaningful legacy collections" },
 ];
 
 const EntrepreneurialVisionSection = () => {
   const ref = useScrollFadeIn();
+  const isMobile = useIsMobile();
+  const [pairIndex, setPairIndex] = useState(0);
+  const totalPairs = Math.ceil(missions.length / 2);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    const id = setInterval(() => {
+      setPairIndex((i) => (i + 1) % totalPairs);
+    }, 3500);
+    return () => clearInterval(id);
+  }, [isMobile, totalPairs]);
+
+  const currentPair = missions.slice(pairIndex * 2, pairIndex * 2 + 2);
 
   return (
     <section
@@ -52,24 +55,56 @@ const EntrepreneurialVisionSection = () => {
           <p className="text-lg">
             Raj is not only a numismatics expert but also an entrepreneur committed to elevating the standards of antique coin trading in India.
           </p>
-          <p>
-            His mission is to:
-          </p>
+          <p>His mission is to:</p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-6 mb-12">
-          {missions.map((mission) => (
-            <div
-              key={mission.title}
-              className="flex items-start gap-4 bg-card rounded-sm p-6 border border-border hover:border-gold/50 transition-colors"
-            >
-              <div className="mt-1 p-2 rounded-sm bg-gold/10">
-                <mission.icon className="w-5 h-5 text-gold" />
+        {/* Desktop: 2x2 grid */}
+        {!isMobile && (
+          <div className="grid sm:grid-cols-2 gap-6 mb-12">
+            {missions.map((mission) => (
+              <div
+                key={mission.title}
+                className="flex items-start gap-4 bg-card rounded-sm p-6 border border-border hover:border-gold/50 transition-colors"
+              >
+                <div className="mt-1 p-2 rounded-sm bg-gold/10">
+                  <mission.icon className="w-5 h-5 text-gold" />
+                </div>
+                <p className="font-body text-foreground">{mission.title}</p>
               </div>
-              <p className="font-body text-foreground">{mission.title}</p>
+            ))}
+          </div>
+        )}
+
+        {/* Mobile: auto-scrolling 2-card carousel */}
+        {isMobile && (
+          <div className="mb-12">
+            <div className="grid grid-cols-2 gap-3 min-h-[120px]">
+              {currentPair.map((mission) => (
+                <div
+                  key={mission.title}
+                  className="flex flex-col items-center gap-3 bg-card rounded-lg p-4 border border-gold/30 text-center transition-all duration-500"
+                >
+                  <div className="p-2.5 rounded-full bg-gold/10">
+                    <mission.icon className="w-5 h-5 text-gold" />
+                  </div>
+                  <p className="font-body text-sm text-foreground leading-snug">{mission.title}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+            <div className="flex justify-center gap-2 mt-4">
+              {Array.from({ length: totalPairs }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setPairIndex(i)}
+                  className={`h-1.5 rounded-full transition-all ${
+                    i === pairIndex ? "bg-gold w-6" : "bg-gold/30 w-4"
+                  }`}
+                  aria-label={`Pair ${i + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="text-center max-w-3xl mx-auto">
           <p className="font-body text-lg text-charcoal-light leading-relaxed">
