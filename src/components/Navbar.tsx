@@ -42,6 +42,10 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         hidden ? "-translate-y-full" : "translate-y-0"
+      } ${
+        scrolled
+          ? "bg-cream/95 dark:bg-[#050913]/95 backdrop-blur-md border-b border-gold/10"
+          : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16 md:h-20">
@@ -49,7 +53,11 @@ const Navbar = () => {
           onClick={() => handleClick("#hero")}
           className="flex items-center"
           aria-label="Scroll to top"
-        />
+        >
+          <span className="font-serif-display text-lg font-bold tracking-wide text-foreground md:hidden">
+            Raj Karnawat
+          </span>
+        </button>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-6">

@@ -1,5 +1,5 @@
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Facebook, Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -11,12 +11,13 @@ const ContactSection = () => {
   const PHONE_DISPLAY = "9922331612";
   const FACEBOOK_URL = "https://www.facebook.com/share/1NSDcy9pSL/";
   const INSTAGRAM_URL = "https://www.instagram.com/rajkarnawat13?utm_source=qr&igsh=MWNmNnMyY3g1OHVwZQ==";
-  const EMAIL_URL = "https://www.facebook.com/share/1NSDcy9pSL/";
+  const EMAIL_ID = "rajkarnawat13@gmail.com";
+  const EMAIL_URL = `mailto:${EMAIL_ID}`;
 
   const ADDRESS_LINES = [
-    "Raj Pradeep Karnawat, Flat No. 404, Malhar Residency,",
-    "Near Trinity High School, Behind Akurdi Petrol Pump,",
-    "Akurdi, Pune - 411035",
+    "Raj Pradeep Karnawat",
+    "Malhar Residency, Behind Akurdi Petrol Pump,",
+    "Dattawadi, Akurdi ; Pune-411035.",
   ];
 
   const addressLines = useMemo(() => ADDRESS_LINES, []);
@@ -29,6 +30,16 @@ const ContactSection = () => {
   const [form, setForm] = useState({
     name: "", phone: "", whatsapp: "", facebook: "", favoriteCategory: "", message: "",
   });
+
+  // Auto-flip logic for visiting card
+  const [isCardFlipped, setIsCardFlipped] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsCardFlipped((prev) => !prev);
+    }, 3000); // Flip every 3 seconds
+    return () => clearInterval(interval);
+  }, []);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,9 +77,22 @@ const ContactSection = () => {
           <div className={`space-y-5 ${isMobile ? "order-1" : "order-2"}`}>
             {/* Visiting card */}
             <div className="flex justify-center">
-              <div className="group relative w-full max-w-md rounded-md overflow-hidden border border-gold/30 bg-cream shadow-lg">
-                <img src="/card1.png" alt="Visiting card front" className="w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" loading="lazy" />
-                <img src="/card back.png" alt="Visiting card back" className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100" loading="lazy" />
+              <div
+                className="group relative w-full max-w-md rounded-md overflow-hidden border border-gold/30 bg-cream shadow-lg cursor-pointer"
+                onClick={() => setIsCardFlipped(!isCardFlipped)}
+              >
+                <img
+                  src="/card1.png"
+                  alt="Visiting card front"
+                  className={`w-full h-full object-cover transition-opacity duration-700 ${isCardFlipped ? "opacity-0" : "opacity-100"}`}
+                  loading="lazy"
+                />
+                <img
+                  src="/card back.png"
+                  alt="Visiting card back"
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${isCardFlipped ? "opacity-100" : "opacity-0"}`}
+                  loading="lazy"
+                />
               </div>
             </div>
 
@@ -121,13 +145,13 @@ const ContactSection = () => {
                       <MessageCircle className="h-4 w-4 text-green-500" /><span>WhatsApp: {PHONE_DISPLAY}</span>
                     </a>
                     <a href={EMAIL_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-cream transition-colors">
-                      <Mail className="h-4 w-4 text-gold" /><span>Email</span>
+                      <Mail className="h-4 w-4 text-gold" /><span className="font-mono text-xs md:text-sm break-all">{EMAIL_ID}</span>
                     </a>
                     <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-cream transition-colors">
-                      <Facebook className="h-4 w-4 text-blue-500" /><span>Facebook</span>
+                      <Facebook className="h-4 w-4 text-blue-500" /><span className="font-mono text-xs md:text-sm break-all">facebook.com/share/1NSDcy9pSL/</span>
                     </a>
                     <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-cream transition-colors">
-                      <Instagram className="h-4 w-4 text-fuchsia-500" /><span>Instagram</span>
+                      <Instagram className="h-4 w-4 text-fuchsia-500" /><span className="font-mono text-xs md:text-sm break-all">@rajkarnawat13</span>
                     </a>
                     <div className="pt-2.5 border-t border-gold/10">
                       <div className="flex items-start gap-3">
@@ -168,26 +192,32 @@ const ContactSection = () => {
                     className={`mt-1 w-full rounded-md bg-cream/5 border border-gold/20 font-body text-cream placeholder:text-cream/30 outline-none focus:border-gold/60 ${isMobile ? "px-3 py-2 text-sm" : "px-3.5 py-2.5"}`}
                     placeholder="Your phone number" />
                 </label>
-                <label className="block">
-                  <span className="font-body text-xs tracking-widest uppercase text-cream/60">WhatsApp</span>
-                  <input value={form.whatsapp} onChange={(e) => setForm((s) => ({ ...s, whatsapp: e.target.value }))}
-                    className={`mt-1 w-full rounded-md bg-cream/5 border border-gold/20 font-body text-cream placeholder:text-cream/30 outline-none focus:border-gold/60 ${isMobile ? "px-3 py-2 text-sm" : "px-3.5 py-2.5"}`}
-                    placeholder="Your WhatsApp number" />
-                </label>
-                <label className="block">
-                  <span className="font-body text-xs tracking-widest uppercase text-cream/60">Facebook</span>
-                  <input value={form.facebook} onChange={(e) => setForm((s) => ({ ...s, facebook: e.target.value }))}
-                    className={`mt-1 w-full rounded-md bg-cream/5 border border-gold/20 font-body text-cream placeholder:text-cream/30 outline-none focus:border-gold/60 ${isMobile ? "px-3 py-2 text-sm" : "px-3.5 py-2.5"}`}
-                    placeholder="Facebook profile link" />
-                </label>
+                {!isMobile && (
+                  <>
+                    <label className="block">
+                      <span className="font-body text-xs tracking-widest uppercase text-cream/60">WhatsApp</span>
+                      <input value={form.whatsapp} onChange={(e) => setForm((s) => ({ ...s, whatsapp: e.target.value }))}
+                        className={`mt-1 w-full rounded-md bg-cream/5 border border-gold/20 font-body text-cream placeholder:text-cream/30 outline-none focus:border-gold/60 ${isMobile ? "px-3 py-2 text-sm" : "px-3.5 py-2.5"}`}
+                        placeholder="Your WhatsApp number" />
+                    </label>
+                    <label className="block">
+                      <span className="font-body text-xs tracking-widest uppercase text-cream/60">Facebook</span>
+                      <input value={form.facebook} onChange={(e) => setForm((s) => ({ ...s, facebook: e.target.value }))}
+                        className={`mt-1 w-full rounded-md bg-cream/5 border border-gold/20 font-body text-cream placeholder:text-cream/30 outline-none focus:border-gold/60 ${isMobile ? "px-3 py-2 text-sm" : "px-3.5 py-2.5"}`}
+                        placeholder="Facebook profile link" />
+                    </label>
+                  </>
+                )}
               </div>
 
-              <label className="block mt-3">
-                <span className="font-body text-xs tracking-widest uppercase text-cream/60">Favorite category</span>
-                <input value={form.favoriteCategory} onChange={(e) => setForm((s) => ({ ...s, favoriteCategory: e.target.value }))}
-                  className={`mt-1 w-full rounded-md bg-cream/5 border border-gold/20 font-body text-cream placeholder:text-cream/30 outline-none focus:border-gold/60 ${isMobile ? "px-3 py-2 text-sm" : "px-3.5 py-2.5"}`}
-                  placeholder="e.g. Ancient coins, British India, Notes, etc." />
-              </label>
+              {!isMobile && (
+                <label className="block mt-3">
+                  <span className="font-body text-xs tracking-widest uppercase text-cream/60">Favorite category</span>
+                  <input value={form.favoriteCategory} onChange={(e) => setForm((s) => ({ ...s, favoriteCategory: e.target.value }))}
+                    className={`mt-1 w-full rounded-md bg-cream/5 border border-gold/20 font-body text-cream placeholder:text-cream/30 outline-none focus:border-gold/60 ${isMobile ? "px-3 py-2 text-sm" : "px-3.5 py-2.5"}`}
+                    placeholder="e.g. Ancient coins, British India, Notes, etc." />
+                </label>
+              )}
 
               <label className="block mt-3">
                 <span className="font-body text-xs tracking-widest uppercase text-cream/60">Message</span>

@@ -48,7 +48,7 @@ function AnimatedCounter({ target, suffix }: { target: number; suffix: string })
 }
 
 const StatsBar = () => (
-  <section className="relative z-20 pb-16 overflow-visible">
+  <section className="hidden md:block relative z-20 pb-16 overflow-visible">
     {/* Half hero background (top) + half story background (bottom) */}
     <div
       aria-hidden="true"
@@ -80,9 +80,8 @@ const StatsBar = () => (
           {stats.map((stat, i) => (
             <div
               key={stat.label}
-              className={`text-center ${
-                i < stats.length - 1 ? "md:border-r md:border-gold/30" : ""
-              }`}
+              className={`text-center ${i < stats.length - 1 ? "md:border-r md:border-gold/30" : ""
+                }`}
             >
               <div className="font-serif-display text-2xl md:text-4xl font-bold gold-glow-text mb-1">
                 {stat.display ? (

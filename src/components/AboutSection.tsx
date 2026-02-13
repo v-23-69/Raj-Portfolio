@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 import { BookOpen, Languages, TrendingUp, ChevronDown, ChevronUp } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import profileImg from "../../profile img.png";
 
 const highlights = [
   { icon: BookOpen, text: "Deep knowledge of Brahmi & Persian scripts on ancient coins" },
@@ -49,7 +50,7 @@ const AboutSection = () => {
               <div className="aspect-[4/5] rounded-sm premium-frame p-3 md:p-4">
                 <div className="h-full w-full rounded-sm overflow-hidden bg-foreground/5">
                   <img
-                    src="/profile%20img.png"
+                    src={profileImg}
                     alt="Raj Karnawat"
                     className="h-full w-full object-contain object-top scale-[0.95]"
                     loading="lazy"
