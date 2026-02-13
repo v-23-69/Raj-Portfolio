@@ -1,79 +1,110 @@
 
 
-# Raj Pradeep Karnawat — Premium Numismatics Portfolio
+# Mobile UI Optimization Plan
 
-## Design Direction
-- **Palette**: Warm gold (#C5A55A) accents on cream/ivory backgrounds, with deep charcoal text for contrast
-- **Typography**: Elegant serif headings (Playfair Display) with clean sans-serif body text
-- **Mood**: Luxurious, authoritative, heritage-rich — think high-end auction house
+All changes will use responsive classes (e.g., `md:` prefix) so the desktop/laptop layout remains completely untouched.
 
 ---
 
-## Page Sections (Single-Page Scrolling Layout)
+## 1. Hero Section - 3x3 Grid on Mobile (9 images instead of 16)
 
-### 1. Hero Section
-- Full-width cinematic hero with a subtle gold gradient overlay
-- Large circular or framed photo placeholder with an ornate gold border effect
-- Name in bold serif with the tagline: *"Numismatics Authority | 12+ Years | 50,000+ Deals"*
-- Animated entrance with fade-in and scale effects
-- CTA buttons: "Request Coin Evaluation" and "WhatsApp" (scrolls to contact / opens WhatsApp)
+**File: `src/components/ui/shuffle-grid.tsx`**
 
-### 2. Authority Stats Bar
-- Floating stats strip with animated counters:
-  - **12+** Years Experience
-  - **50,000+** Successful Deals
-  - **10,000+** Trusted Clients
-  - **100 BC – 1947** Specialization Range
-- Gold accent line separators between each stat
+- Create a separate mobile grid order array with only 9 coins (first 9 from the current 16)
+- Use the `useIsMobile()` hook to conditionally pick 9 vs 16 coins
+- Change mobile grid from `grid-cols-2` to `grid-cols-3` so all 9 coins show in a compact 3x3 layout
+- Tighten mobile padding and spacing for a cleaner hero presentation
 
-### 3. About / Story Section
-- Split layout: elegant text on one side, supporting image on the other
-- Covers his journey, expertise in Brahmi & Persian scripts, and market authority
-- Subtle scroll-triggered fade-in animations
-
-### 4. 3D Coin Gallery
-- Grid of coin cards with **3D flip-on-hover** effect
-- Front: coin obverse image, era label (e.g., "Mughal Empire, 1600 AD")
-- Back: coin reverse image with brief description and historical context
-- Smooth CSS 3D perspective transform animation
-- Placeholder coin images initially (easy to swap with real photos later)
-
-### 5. Services Section
-- Elegant card layout for:
-  - Coin Authentication & Grading
-  - Price Evaluation
-  - Buy & Sell Advisory
-  - Collection Guidance
-- Each card with a gold icon, title, and short description
-
-### 6. Testimonials
-- Carousel/slider with client quotes
-- Gold quotation marks, client name, and context
-- Clean, minimal design with cream background
-
-### 7. Contact / CTA Section
-- "Get Expert Guidance" headline
-- WhatsApp direct link button (prominent, gold-styled)
-- Email contact option
-- Simple inquiry prompt (no backend — just mailto and WhatsApp links)
-
-### 8. Footer
-- Name, tagline, and copyright
-- Social/WhatsApp links
-- Elegant gold divider line
+**File: `src/components/HeroSection.tsx`**
+- Reduce mobile padding (`py-10` instead of `py-16`)
+- Make the hero text more compact on mobile: smaller logo, tighter spacing
+- Stack content vertically with the coin grid above and text below (or vice versa)
 
 ---
 
-## Interactions & Animations
-- Smooth scroll navigation with a sticky top navbar
-- Fade-in on scroll for each section
-- 3D CSS flip on coin cards (perspective + rotateY transform)
-- Hover-scale effects on service cards and CTAs
-- Animated number counters on the stats bar
+## 2. About Section - "Read More" for Long Text
+
+**File: `src/components/AboutSection.tsx`**
+
+- Add a `useState` toggle (`expanded`) defaulting to `false`
+- On mobile only (detected via `useIsMobile()`), show only the first paragraph by default
+- Show a "Read More" / "Read Less" gold-styled button to expand/collapse the remaining paragraphs
+- Desktop shows all text as-is (no change)
+
+---
+
+## 3. Professional Background - "Read More" for Long Text
+
+**File: `src/components/ProfessionalBackgroundSection.tsx`**
+
+- Same pattern as About: `useState` toggle for mobile
+- Show only the intro paragraph on mobile, with "Read More" to reveal the full technology career card and details
+- Desktop remains unchanged
+
+---
+
+## 4. Entrepreneurial Vision - Auto-Scrolling 2-Card Carousel on Mobile
+
+**File: `src/components/EntrepreneurialVisionSection.tsx`**
+
+- Convert the 4 mission cards into styled cards with gold icon, border, and subtle background
+- On mobile: show 2 cards at a time in a horizontal auto-scrolling carousel (using `setInterval` to shift pairs every 3-4 seconds), similar to the Services marquee
+- Add dot indicators below for the current pair
+- On desktop: keep the existing 2x2 grid layout unchanged
+
+---
+
+## 5. Coin Gallery - Compact 3x3 Grid on Mobile
+
+**File: `src/components/CoinGallery.tsx`**
+
+- Currently shows `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4`
+- Change to `grid-cols-3` on mobile (below `sm:`) to show a tight 3x3 grid
+- Reduce card size on mobile: smaller aspect ratio, smaller text, tighter padding
+- Show only first 9 coins on mobile (hide the rest) or show all 8 in a compact grid
+- Reduce section padding on mobile (`py-16` instead of `py-24`)
+
+---
+
+## 6. Testimonials - Compact Mobile Layout
+
+**File: `src/components/TestimonialsSection.tsx`**
+
+- On mobile: remove the left-side descriptive text panel, show only the rotating testimonial card
+- Reduce padding (`py-16` instead of `py-24`, `px-4` instead of `px-6`)
+- Smaller quote text, tighter spacing
+- Keep the dot indicators compact
+- Desktop layout stays the same (side-by-side)
+
+---
+
+## 7. Contact Section - Clean Mobile UI
+
+**File: `src/components/ContactSection.tsx`**
+
+- Stack everything vertically on mobile with better spacing
+- Visiting card: full width, centered
+- Contact details card: compact layout with icons in a horizontal row
+- Form: reduce padding, smaller input fields
+- Map: reduce aspect ratio on mobile to save space
+- Overall tighter padding (`py-12` instead of `py-16`)
+
+---
+
+## 8. Mobile CSS Refinements
+
+**File: `src/index.css`**
+
+- Add mobile-specific styles for the coin gallery 3x3 grid sizing
+- Ensure background images render properly on mobile with `background-size: cover` and `background-attachment: scroll` (not fixed, which breaks on mobile)
+- Floating social links: slightly smaller icons on mobile (`h-11 w-11` instead of `h-14 w-14`)
+
+---
 
 ## Technical Notes
-- Fully static — no backend needed
-- Light theme only (no dark mode toggle)
-- Mobile-responsive design throughout
-- All coin images use placeholders initially for easy replacement
+
+- All mobile detection uses either Tailwind responsive prefixes (`md:`, `sm:`, `lg:`) or the existing `useIsMobile()` hook
+- No desktop/laptop styles are modified -- only adding mobile-specific overrides
+- The "Read More" toggles use simple React state with smooth height transitions
+- The Entrepreneurial Vision carousel uses `useState` + `useEffect` with `setInterval` for auto-rotation
 
