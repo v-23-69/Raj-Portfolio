@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
-import { GraduationCap, Briefcase, Code } from "lucide-react";
+import { Code, ChevronDown, ChevronUp } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const ProfessionalBackgroundSection = () => {
   const ref = useScrollFadeIn();
+  const isMobile = useIsMobile();
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <section
@@ -33,51 +37,68 @@ const ProfessionalBackgroundSection = () => {
           <p className="text-lg">
             Raj Pradeep Karnawat brings together two worlds — the precision of engineering and the depth of historical scholarship.
           </p>
-          <p>
-            With a B.E. in Mechanical Engineering, he developed analytical discipline and structured problem-solving skills that later enhanced both his technology and numismatics careers.
-          </p>
-          <p>
-            Alongside his 12+ year legacy in coin trading, he has built strong experience in software development:
-          </p>
+          {(!isMobile || expanded) && (
+            <>
+              <p>
+                With a B.E. in Mechanical Engineering, he developed analytical discipline and structured problem-solving skills that later enhanced both his technology and numismatics careers.
+              </p>
+              <p>
+                Alongside his 12+ year legacy in coin trading, he has built strong experience in software development:
+              </p>
+            </>
+          )}
+          {isMobile && (
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="flex items-center gap-1.5 text-gold font-semibold text-sm hover:opacity-80 transition-opacity"
+            >
+              {expanded ? "Read Less" : "Read More"}
+              {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            </button>
+          )}
         </div>
 
-        <div className="bg-card rounded-sm p-8 md:p-10 border border-border">
-          <div className="flex items-start gap-4 mb-6">
-            <div className="mt-1 p-3 rounded-sm bg-gold/10">
-              <Code className="w-6 h-6 text-gold" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-serif-display text-2xl font-semibold text-foreground mb-4">
-                Technology Career
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <span className="text-gold font-semibold">4.5 Years</span>
-                  <span>as Java Developer</span>
+        {(!isMobile || expanded) && (
+          <>
+            <div className="bg-card rounded-sm p-8 md:p-10 border border-border">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="mt-1 p-3 rounded-sm bg-gold/10">
+                  <Code className="w-6 h-6 text-gold" />
                 </div>
-                <div className="pl-6 space-y-2 text-sm">
-                  <div className="flex items-start gap-2">
-                    <span className="text-gold">•</span>
-                    <span><strong>1.5 Years</strong> at Bluemingotech Pvt Ltd</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-gold">•</span>
-                    <span><strong>3 Years</strong> at Canopus Solutions Pvt Ltd</span>
+                <div className="flex-1">
+                  <h3 className="font-serif-display text-2xl font-semibold text-foreground mb-4">
+                    Technology Career
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3">
+                      <span className="text-gold font-semibold">4.5 Years</span>
+                      <span>as Java Developer</span>
+                    </div>
+                    <div className="pl-6 space-y-2 text-sm">
+                      <div className="flex items-start gap-2">
+                        <span className="text-gold">•</span>
+                        <span><strong>1.5 Years</strong> at Bluemingotech Pvt Ltd</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-gold">•</span>
+                        <span><strong>3 Years</strong> at Canopus Solutions Pvt Ltd</span>
+                      </div>
+                    </div>
+                    <p className="text-sm mt-4">
+                      Expertise in enterprise application development. Strong foundation in system design and structured architecture.
+                    </p>
                   </div>
                 </div>
-                <p className="text-sm mt-4">
-                  Expertise in enterprise application development. Strong foundation in system design and structured architecture.
-                </p>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div className="mt-8 text-center">
-          <p className="font-body text-lg text-foreground italic">
-            This rare combination of technical precision and historical expertise makes him uniquely positioned in the numismatic industry.
-          </p>
-        </div>
+            <div className="mt-8 text-center">
+              <p className="font-body text-lg text-foreground italic">
+                This rare combination of technical precision and historical expertise makes him uniquely positioned in the numismatic industry.
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
